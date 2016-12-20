@@ -16,6 +16,10 @@ export default class Mock implements MockInter{
 
     private props:MockPropsInter;
 
+    private urlReg:RegExp;
+
+    private localReg:RegExp;
+
     constructor(props:MockPropsInter = {
         mockdir:'mocks',
         suffix:'.json',
@@ -24,6 +28,8 @@ export default class Mock implements MockInter{
     } ){
         //local
         this.props = props;
+        this.urlReg = /(http)?[s]?:?\/\/[\w\.]+\.(?:com|\w){1,3}/i;
+        this.localReg =  /127.0.0.1|localhost|8081|3305|3005/i;
     }
 
     isLocal():boolean{
@@ -32,7 +38,7 @@ export default class Mock implements MockInter{
 
     getLocalUrl(url:string):string{
 
-        url = url.replace(/(http)?[s]?:?\/\/[\w\.]+\.(?:com|\w){1,3}/i, '').split('?')[0].replace(/\.\w{1,8}/,'');
+        url = url.replace(this.urlReg, '').split('?')[0].replace(/\.\w{1,8}/,'');
 
         return `${location.origin}/${this.props.mockdir}${url}${this.props.suffix}`;
     }
@@ -57,7 +63,7 @@ export default class Mock implements MockInter{
     private getEnv():any{
 
         let location:{host:string,href:string,search:any} = window.location,
-            isLocal:boolean = /127.0.0.1|localhost|8081|3305|3005/.test(location.host) && location.href.indexOf('8080')<0;
+            isLocal:boolean =this.localReg.test(location.host) && location.href.indexOf('8080')<0;
 
         let field:boolean = (isLocal || (location.search && location.search.match('mock=1')!=null) );
 
