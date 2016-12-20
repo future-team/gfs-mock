@@ -45,11 +45,11 @@ module.exports ={
     }],
     module:{
         preLoaders: [
-            {
+            /*{
                 test: /\.(jsx|es6|js)$/,
                 loaders: ['eslint-loader'],
                 exclude: /node_modules/
-            }/*,
+            },
             {
                 test: /\.js$/,
                 loader: "source-map-loader"

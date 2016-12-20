@@ -1,6 +1,10 @@
-import Hello from '../../src/Hello';
+import Mock from '../../src/Index';
+import Fetch from 'gfs-fetch';
 
 
-const hello = new Hello();
+let fetch = new Fetch(new Mock() );
 
-document.body.innerHTML = hello.getMessage();
+fetch.run('https://e.dianping.com/actions/test/ajax.action?debug=1&_cid=1024').then(function(data){
+
+    document.getElementById('root').innerHTML = data.description;
+});
