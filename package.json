@@ -1,6 +1,6 @@
 {
   "name": "gfs-mock",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "trade f2e project",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^6.2.0",
     "extract-text-webpack-plugin": "^0.8.2",
-    "gfs-fetch": "^1.0.4",
+    "gfs-fetch": "^1.0.6",
     "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.3.0",

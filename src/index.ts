@@ -20,6 +20,8 @@ export default class Mock implements MockInter{
 
     private localReg:RegExp;
 
+    private isDev:boolean;
+
     constructor(props:MockPropsInter = {
         mockdir:'mocks',
         suffix:'.json',
@@ -28,6 +30,7 @@ export default class Mock implements MockInter{
     } ){
         //local
         this.props = props;
+        this.isDev = false;
         this.urlReg = /(http)?[s]?:?\/\/[\w\.]+\.(?:com|\w){1,3}/i;
         this.localReg =  /127.0.0.1|localhost|8081|3305|3005/i;
     }
@@ -42,7 +45,9 @@ export default class Mock implements MockInter{
 
         return `${location.origin}/${this.props.mockdir}${url}${this.props.suffix}`;
     }
-
+    getDev():boolean{
+        return this.isDev;
+    }
     /**
      * 获取最终的url
      * */
@@ -50,8 +55,11 @@ export default class Mock implements MockInter{
 
         if(this.props.isMock || this.isLocal() ){
             url =  this.getLocalUrl(url );
+            this.isDev = true;
             console && console.log('[mock data]','创建本地数据链接成功！',url);
             return this.props.localUrlToLowerCase ? url.toLowerCase() : url;
+        }else{
+            this.isDev = false;
         }
 
         return url;
